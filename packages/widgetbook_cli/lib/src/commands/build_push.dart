@@ -6,6 +6,7 @@ import 'package:file/local.dart';
 import 'package:path/path.dart' as p;
 import 'package:process/process.dart';
 
+import '../../metadata.dart';
 import '../api/api.dart';
 import '../cache/cache.dart';
 import '../core/core.dart';
@@ -28,6 +29,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
           name: 'push',
           description: 'Pushes a new build to Widgetbook Cloud',
         ) {
+    logger.info('CLI Version: $packageVersion');
     argParser
       ..addOption(
         'api-key',

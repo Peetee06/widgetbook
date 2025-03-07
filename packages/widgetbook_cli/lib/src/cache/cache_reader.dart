@@ -43,8 +43,15 @@ class CacheReader {
         .map((json) => jsonDecode(json) as List)
         .map((list) => list.cast<Map<String, dynamic>>())
         .expand((list) => list) // Flatten JSON List
-        .map((item) => UseCaseMetadata.fromJson(item))
-        .toList();
+        .map((item) {
+      try {
+        return UseCaseMetadata.fromJson(item);
+      } catch (e) {
+        print('Error parsing use case metadata: $e');
+        print(item);
+        rethrow;
+      }
+    }).toList();
 
     final addonsConfigs = await cacheFiles
         .firstWhereOrNull((file) => file.path.endsWith(configExtension))
